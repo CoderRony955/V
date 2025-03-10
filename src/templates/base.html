@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V | Space Science Chatbot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='imgs/V.png') }}" type="image/x-icon" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='home_style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body class="bg-gray-100">
+  {% block Navbar %} {% endblock %}
+
+  <section class="relative w-full h-screen flex items-center justify-center text-white">
+    {% block hero %} {% endblock %}
+
+    <!-- about section  -->
+  </section>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+    <path fill="#000b76" fill-opacity="1"
+      d="M0,320L48,277.3C96,235,192,149,288,112C384,75,480,85,576,101.3C672,117,768,139,864,170.7C960,203,1056,245,1152,261.3C1248,277,1344,267,1392,261.3L1440,256L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+    </path>
+  </svg>
+  <div class="about-v">
+    <div class="text-center">
+      <img src="{{ url_for('static', filename='imgs/V.png') }}" alt="Blog Image"
+        class="w-72 h-80 object-cover mx-auto hover:scale-105 transition-transform duration-300" />
+    </div>
+
+    <div class="about-main">
+      <h1 class="text-center text-5xl font-bold text-white font-mono">
+        Meet V
+      </h1>
+      <p class="text-center text-lg mt-4 font-arial text-white w-3/4 mx-auto">
+        A Space Science AI Chatbot Powered by
+        <a href="https://qwenlm.github.io/"><b>Qwen2.5</b></a>. The Space Science Chatbot, is an advanced AI-driven
+        conversational
+        assistant designed to engage users in insightful discussions about
+        space, astronomy, astrophysics, and the mysteries of the universe.
+        Whether you are a space enthusiast, a student, or a professional
+        researcher, this chatbot serves as a knowledgeable and interactive
+        companion for exploring the cosmos. And this chatbot is powered by the
+        Ollama Large Language Model (LLM), a cutting-edge AI capable of
+        understanding and generating human-like responses.
+      </p>
+
+    </div>
+  </div>
+
+  <section class="image-content mt-10">
+    <div class="bg-gray-200 py-10 rounded-full bg-opacity-55">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row">
+
+          <!-- Content Section -->
+
+          <div class="md:w-1/2 md:pr-8 mb-8 md:mb-0">
+            <h2 class="text-3xl font-semibold mb-4">Powered by Qwen2.5</h2>
+
+            <p class="text-black mb-4 first-letter:text-5xl">V AI built on the powerful Qwen2.5 model, designed to provide accurate, up-to-date, and in-depth information about space science, astronomy, and astrophysics. Whether you're a student, researcher, or space enthusiast, AstroQwen serves as your personal guide to the wonders of the universe.
+            </p>
+
+            <a href="/chat"
+              class="text-white font-semibold bg-blue-900 rounded-full hover:italic hover:bg-blue-700 hover:scale-105 transition-transform duration-105 p-3">Chat now</a>
+          </div>
+          <!-- Image Section -->
+          <div class="md:w-1/2">
+            <img
+              src="{{ url_for('static', filename='imgs/Powered_by_qwen.png') }}"
+              alt="Image" class="rounded-lg hover:rounded-full duration-1000 ease-in-out  hover:scale-110">
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 2nd content -->
+
+    <div class="bg-blue-900 py-10 rounded-full mt-10">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row-reverse">
+
+          <!-- Content Section -->
+
+          <div class="md:w-1/2 md:pr-8 mb-8 md:mb-0  md:mr-7 opacity-90">
+            <h2 class="text-3xl text-white font-semibold mb-4">Chat related to space science</h2>
+
+            <p class="text-white  mb-4 first-letter:text-5xl"><b>V AI</b> is your go-to AI for exploring the wonders of the cosmos, breaking down complex space science into easy-to-understand insights. Whether you're curious about black holes, time travel, or upcoming Mars missions, <b>V</b> is here to guide you through the vastness of space!</p>
+
+            <a href="/chat"
+              class="text-black font-semibold bg-blue-400 rounded-full hover:italic hover:bg-blue-700 hover:scale-105 transition-transform duration-105 p-3">Chat now</a>
+          </div>
+          <!-- Image Section -->
+          <div class="md:w-1/2 md:mr-44">
+            <img
+              src="{{ url_for('static', filename='imgs/space_gif.gif') }}"
+              alt="Image" class="rounded-lg hover:rounded-full duration-1000 ease-in-out hover:scale-110">
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  {% block footer %} {% endblock %}
+</body>
+
+</html>

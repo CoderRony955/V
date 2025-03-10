@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V | Chat</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='imgs/V.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='chat_style.css') }}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-200">
+    <!-- Chat Container -->
+    <div class="chat-container bg-gray-100">
+        <div class="chat-box">
+            <div class="bg-gray-900 text-white p-4 flex items-center justify-start space-x-4 rounded-full fixed top-0 left-0 w-full  z-50">
+                <a href="/" class="flex items-center">
+                    <img src="{{ url_for('static', filename='imgs/V.png') }}" alt="Logo" class="h-12 mt-2 ml-2" />
+                    <h2 class="text-xl font-semibold ml-2">Chat related to space science</h2>
+                </a>
+            </div>
+
+            <div class="chat-messages rounded-lg space-y-4" id="chat-messages">
+            </div>
+
+            <!-- Chat Input Area -->
+            <div class="chat-input">
+                <textarea id="user-input" class="input-field bg-gray-800 text-white" rows="2" placeholder="Type your message..."
+                    autocomplete="off"></textarea>
+                <button id="send-btn" class="send-btn hover:scale-105 transition-transform duration-300">></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById("user-input");
+            const chatMessages = document.getElementById("chat-messages");
+
+            const userMessage = userInput.value.trim();
+            if (userMessage === "") return;
+
+            const userMessageDiv = document.createElement("div");
+            userMessageDiv.classList.add("flex", "justify-end");
+            userMessageDiv.innerHTML = `
+                <div class="bg-gray-200 text-black p-3 rounded-lg max-w-xs">
+                    <p>${userMessage}</p>
+                </div>
+            `;
+            chatMessages.appendChild(userMessageDiv);
+
+            // Clear input field
+            userInput.value = "";
+
+            // Scroll to the bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Show typing indicator
+            const botTypingDiv = document.createElement("div");
+            botTypingDiv.classList.add("flex", "justify-start");
+            botTypingDiv.innerHTML = `
+                <div class="bg-gray-600 text-white p-3 rounded-lg max-w-xs">
+                    <p>Typing...</p>
+                </div>
+            `;
+            chatMessages.appendChild(botTypingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Send message to Flask backend
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: new URLSearchParams({ query: userMessage }),
+                });
+
+                const data = await response.json();
+                chatMessages.removeChild(botTypingDiv); // Remove typing indicator
+
+                // Append bot response as HTML (Markdown rendered)
+                const botMessageDiv = document.createElement("div");
+                botMessageDiv.classList.add("flex", "justify-start");
+                botMessageDiv.innerHTML = `
+                    <div class="bg-gray-800 text-white p-3 rounded-lg">
+                        <p>${data.response}</p>
+                    </div>
+                `;
+                chatMessages.appendChild(botMessageDiv);
+
+                // Scroll to the bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
+        // Send message on clicking the send button
+        document
+            .getElementById("send-btn")
+            .addEventListener("click", sendMessage);
+
+        // Send message on pressing Enter
+        document
+            .getElementById("user-input")
+            .addEventListener("keypress", function (event) {
+                if (event.key === "Enter" && !event.shiftKey) {
+                    event.preventDefault(); // Prevent new line
+                    sendMessage();
+                }
+            });
+    </script>
+</body>
+
+</html>
